@@ -1,4 +1,9 @@
-
+id: "gm-quickstart"
+name: "Data Science Quickstart with JupyterLab"
+description: "Batteries-Included Gigantum-managed Data Science Quickstart environment with JupyterLab, numpy, and Matplotlib"
+development_env:
+  - jupyerlab:
+    launch_code: "jupyter lab --ip=0.0.0.0 --NotebookApp.token='' --no-browser --ConnectionFileMixin.ip=0.0.0.0"
 packages:
   - apt:
     - build-essential
