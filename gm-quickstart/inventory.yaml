@@ -6,6 +6,9 @@ development_env:
     launch_code: "jupyter lab --ip=0.0.0.0 --NotebookApp.token='' --no-browser --ConnectionFileMixin.ip=0.0.0.0"
 packages:
   - apt:
+    - supervisor
+    - curl
+    - gosu
     - build-essential
     - python3-dev
     - python3-pip
