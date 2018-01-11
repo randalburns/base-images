@@ -1,0 +1,18 @@
+
+packages:
+  - apt:
+    - build-essential
+    - python3-dev
+    - python3-pip
+    - git
+    - curl
+    - vim
+  - pip3:
+    - numpy
+    - matplotlib
+    - requests
+    - jupyter
+    - jupyerlab
+    - ipywidgets
+    - pandas
+  
