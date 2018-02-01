@@ -5,7 +5,7 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 
-FROM gigantum/python3-minimal
+FROM gigantum/python3-minimal:latest
 LABEL maintainer="Gigantum <hello@gigantum.io>"
 
 # Install Python packages
@@ -36,7 +36,7 @@ RUN conda install --quiet --yes nodejs && \
     'vincent=0.4.*' \
     'beautifulsoup4=4.5.*' \
     'protobuf=3.*' \
-    'xlrd=1.1*'  && \
+    'xlrd=1.1*'  \
     'xarray=0.10*'  && \
     jupyter labextension install @jupyterlab/plotly-extension jupyterlab_bokeh && \
     jupyter labextension install jupyterlab_bokeh && \
