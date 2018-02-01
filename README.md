@@ -1,10 +1,59 @@
-# LabBook Base Image Repository
+# Gigantum Official Base Docker Image Repository
 
-A repo to maintain Gigantum authored Base Images for LabBook environments
+A repository to maintain Gigantum authored Base Docker Images for LabBook environments
 
 
 ## Images
 
-### ubuntu1604-python3
+### python3-minimal
 
-An image for Ubuntu 16.04 python 3 developers. Installs the latests updates, build-essential, python3, git, curl, and vim as a base.
+A minimal Base containing Python 3.6 and JupyterLab with no additional packages. Python and JupyterLab
+are installed via conda. The `conda-forge` channel is prepended to the conda channel configuration by
+default.
+
+### python3-data-science
+
+A Base built from `python3-minimal` with additional common data science packages pre-installed.
+
+#### Pre-Installed Packages
+
+- Via `conda`
+  - nomkl
+  - pandas
+  - numexpr
+  - matplotlib
+  - plotly
+  - scipy
+  - seaborn
+  - scikit-learn
+  - scikit-image
+  - sympy
+  - cython
+  - patsy
+  - statsmodels
+  - cloudpickle
+  - dill
+  - numba
+  - bokeh
+  - sqlalchemy
+  - hdf5
+  - h5py
+  - vincent
+  - beautifulsoup4
+  - protobuf
+  - xlrd
+  - xarray
+
+
+### python2-minimal
+
+A minimal Base containing Python 2.7 and JupyterLab with no additional packages. Python and JupyterLab
+are installed via conda. The `conda-forge` channel is prepended to the conda channel configuration by
+default.
+
+## Contributing
+TODO
+
+## Credits
+TODO
+
