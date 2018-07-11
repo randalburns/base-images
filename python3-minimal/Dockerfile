@@ -14,6 +14,9 @@ RUN apt-get update && \
     wget \
     bzip2 \
     ca-certificates \
+    gcc \
+    g++ \
+    make \
     sudo \
     locales \
     fonts-liberation \
