@@ -1,0 +1,7 @@
+id: "rstudio-server"
+name: "RStudio Server"
+description: "A minimal Base containing RStudio Server with no additional packages"
+development_env:
+  - rstudio-server
+packages:
+  - apt:
