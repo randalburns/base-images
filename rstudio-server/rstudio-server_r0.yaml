@@ -21,9 +21,9 @@ development_tools:
   - rstudio
 package_managers:
   - apt:
-    - r-recommended=3.5.1-1bionic
-    - r-cran-tidyverse=1.2.1-3cran1ppa0bionic0
-    - r-cran-data.table=1.11.4-3cran1ppa0bionic0 
+  - conda3:
+      - r-essentials=3.4.3
+      - r-tidyverse=1.2.1
 icon: |
    data:image/svg+xml;utf8,
    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid" width="50" height="50" viewBox="0 0 724 561">
