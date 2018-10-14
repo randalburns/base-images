@@ -23,6 +23,9 @@ RUN apt-get update && \
     nginx \
     r-base \
     r-base-dev \
+    r-cran-curl \
+    r-cran-openssl \
+    r-cran-xml2 \
     sudo \
     locales \
     libxrender1 \

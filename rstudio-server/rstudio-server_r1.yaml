@@ -14,7 +14,7 @@ image:
   server: hub.docker.com
   namespace: gigantum
   repository: rstudio-server
-  tag: c2438f5e79-2018-10-14
+  tag: f0ed577a4c-2018-10-14
 languages:
   - R
 development_tools:
