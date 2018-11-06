@@ -6,6 +6,12 @@
 FROM gigantum/python3-minimal:latest
 LABEL maintainer="Gigantum <support@gigantum.com>"
 
+# I downloaded this key using
+# gpg --keyserver keyserver.ubuntu.com --recv-key 0x51716619e084dab9
+# gpg -a --export 0x51716619e084dab9 > rutter-cran-key.txt
+# Could also directly do: apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 0x51716619e084dab9
+# gpg and gpg-agent are required in any case
+COPY rutter-cran-key.txt /tmp/
 
 # Install system level dependencies
 RUN apt-get update \
@@ -15,16 +21,13 @@ RUN apt-get update \
         # These two packages required to import keys into apt
         gpg \
         gpg-agent \
-        nginx \
-    # Should we make this more robust? - can break because of docker networking
-    # e.g., on Windows. See r-tidyverse base for an alternative.
-    && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9 \
+    && apt-key add /tmp/rutter-cran-key.txt \
     && echo "deb https://cloud.r-project.org/bin/linux/ubuntu bionic-cran35/" > /etc/apt/sources.list.d/cran.list \
     # This also triggers an update as of 18.04/bionic
     && add-apt-repository ppa:marutter/c2d4u3.5 \
     && apt-get install -yq --no-install-recommends \
         r-base \
-        # We get our compilers here
+        # We get any remaining needed compilers here
         r-base-dev \
         r-recommended \
         r-cran-tidyverse \
@@ -35,13 +38,11 @@ RUN apt-get update \
         # OpenBLAS makes R much faster - it will be default upon install
         libopenblas-base \
         libopenblas-dev \
-    # XXX Maybe we should use MRAN? It would certainly make subsequent projects
-    # more reproducible, but is not in line with how we're using pip, conda,
-    # etc. e.g.:
-    # options(repos=c(CRAN="https://cran.microsoft.com/snapshot/2018-07-23/"))
-    && echo 'options(repos = c(CRAN = "https://cloud.r-project.org/"))' >> /etc/R/Rprofile.site \
     # RStudio requirements - keeping separate with thoughts of a refactor
     && apt-get install -yq --no-install-recommends \
+        # nginx is actually a requirement for our approach to proxying
+        nginx \
+        sudo \
         psmisc \
         libapparmor1 \
         libedit2 \
@@ -49,10 +50,15 @@ RUN apt-get update \
         libssl1.0.0 \
     && apt-get clean
 
-# The core of bioconductor is automatically installed by things like
-# neuroconductor. This will speed up one-off package installation for repos
-# that assume this as a pre-req:
-RUN R -e 'source("https://bioconductor.org/biocLite.R"); biocLite()' \
+# XXX Maybe we should use MRAN? It would certainly make subsequent projects
+# more reproducible, but is not in line with how we're using pip, conda,
+# etc. e.g.:
+# options(repos=c(CRAN="https://cran.microsoft.com/snapshot/2018-07-23/"))
+RUN echo 'options(repos = c(CRAN = "https://cloud.r-project.org/"))' >> /etc/R/Rprofile.site \
+    # The core of bioconductor is automatically installed by things like
+    # neuroconductor. This will speed up one-off package installation for repos
+    # that assume this as a pre-req:
+    R -e 'source("https://bioconductor.org/biocLite.R"); biocLite()' \
     # Also Install IRkernal and set up the installed R interpreter in Jupyter
     R -e "devtools::install_github('IRkernel/IRkernel'); IRkernel::installspec(user=FALSE)" \
     # The above will error out by attempting to use the IRkernel package.
@@ -60,7 +66,7 @@ RUN R -e 'source("https://bioconductor.org/biocLite.R"); biocLite()' \
     # R -e "stopifnot(all(c('IRkernel') %in% installed.packages()[, 'Package']))" \
     && rm -rf /tmp/*/downloaded_packages
 
-# downloading the GPG key for RStudio is problematic, so we use the md5 hashe
+# downloading the GPG key for RStudio is problematic, so we use the md5 hash
 # There are numerous potential issues with gpg, including firewalls that block
 # all but web ports, and broken ipv6
 
