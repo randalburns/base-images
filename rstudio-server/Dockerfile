@@ -11,6 +11,7 @@ LABEL maintainer="Gigantum <support@gigantum.com>"
 # gpg -a --export 0x51716619e084dab9 > rutter-cran-key.txt
 # Could also directly do: apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 0x51716619e084dab9
 # gpg and gpg-agent are required in any case
+# Most COPYs are at the end to allow for faster building / development
 COPY rutter-cran-key.txt /tmp/
 
 # Install system level dependencies
@@ -87,3 +88,5 @@ RUN wget https://download2.rstudio.org/rstudio-server-${RSTUDIO_VER}-amd64.deb \
 EXPOSE 8787
 
 COPY rserver.conf /etc/rstudio/rserver.conf
+# This will get copied out at Project Container creation
+COPY user-settings /tmp
