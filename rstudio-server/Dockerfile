@@ -38,6 +38,9 @@ RUN apt-get update \
         r-cran-repr \
         r-cran-pbdzmq \
         r-cran-uuid \
+        # Needed by RStudio / knitr
+        r-cran-catools \
+        r-cran-bitops \
         # OpenBLAS makes R much faster - it will be default upon install
         libopenblas-base \
         libopenblas-dev \
