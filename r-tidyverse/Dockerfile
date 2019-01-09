@@ -3,7 +3,7 @@
 # The below is a relatively straightforward adaptation of directions at
 # https://cran.r-project.org/bin/linux/ubuntu/README.html
 
-FROM gigantum/python3-minimal:2a825d97-2018-08-29
+FROM gigantum/python3-minimal:a55419bd77-2019-01-03
 LABEL maintainer="Gigantum <support@gigantum.com>"
 
 # I downloaded this key using
@@ -42,16 +42,11 @@ RUN apt-get update \
         libopenblas-dev \
     && apt-get clean
 
-# XXX Maybe we should use MRAN? It would certainly make subsequent projects
+# TODO DC Maybe we should use MRAN? It would certainly make subsequent projects
 # more reproducible, but is not in line with how we're using pip, conda,
 # etc. e.g.:
 # options(repos=c(CRAN="https://cran.microsoft.com/snapshot/2018-07-23/"))
 RUN echo 'options(repos = c(CRAN = "https://cloud.r-project.org/"))\n' >> /etc/R/Rprofile.site \
-    # The core of bioconductor is automatically installed by things like
-    # neuroconductor. This will speed up one-off package installation for repos
-    # that assume this as a pre-req:
-    # BUT, it also seems to override numerous packages from CRAN... so skipping for now
-    # && R -e 'source("https://bioconductor.org/biocLite.R"); biocLite()' \
     # Also Install IRkernal and set up the installed R interpreter in Jupyter
     # Note that even with upgrade_dependencies=FALSE, we upgrade pbdZMQ
     && R -e "devtools::install_github('IRkernel/IRkernel', ref='0.8.14', upgrade_dependencies=FALSE); IRkernel::installspec(user=FALSE)" \
@@ -60,8 +55,12 @@ RUN echo 'options(repos = c(CRAN = "https://cloud.r-project.org/"))\n' >> /etc/R
     # The below did not succeed even when biocLite() was run above
     # && R -e "stopifnot(all(c('IRkernel', 'BiocManager') %in% installed.packages()[, 'Package']))" \
     && rm -rf /tmp/*/downloaded_packages
+    # The core of bioconductor is automatically installed by things like
+    # neuroconductor. This will speed up one-off package installation for repos
+    # that assume this as a pre-req:
+    # BUT, it also seems to override numerous packages from CRAN... so skipping for now
+    # && R -e 'source("https://bioconductor.org/biocLite.R"); biocLite()' \
 
 # NOTE the most efficient approach to installing R package (e.g. foo) from
 # source is to do this first:
 # sudo apt-get build-dep r-cran-foo
-
