@@ -18,6 +18,7 @@ languages:
   - python2
 development_tools:
   - jupyterlab
+  - notebook
 package_managers:
   - pip:
   - conda2:
