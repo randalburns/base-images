@@ -59,7 +59,6 @@ class BaseImageBuilder(object):
         [print(ln[list(ln.keys())[0]], end='') for ln in client.api.build(path=build_dir,
                                                                           tag=named_tag,
                                                                           nocache=no_cache,
-                                                                          # XXX Currently we need to manually specify tags
                                                                           pull=True, rm=True,
                                                                           decode=True)]
 
