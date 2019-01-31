@@ -1,9 +1,9 @@
 id: "rstudio-server"
 name: "R Tidyverse in RStudio Server"
-description: "A apt-managed install for R + tidyverse packages, etc."
+description: "R + tidyverse packages in RStudio Server"
 readme: |
-  A Base containing CRAN PPA + R Tidyverse packages pre-installed in the RStudio-Server.     
-revision: 0
+  A Base containing CRAN PPA + R Tidyverse packages pre-installed in the RStudio-Server.
+revision: 3
 schema: 1
 tags: ['ubuntu', 'rstats', 'rstudio']
 os_class: ubuntu
@@ -14,16 +14,15 @@ image:
   server: hub.docker.com
   namespace: gigantum
   repository: rstudio-server
-  tag: 65a653983d-2018-10-12    
+  tag: c2b3e8e4d2-2019-01-09
 languages:
   - R
 development_tools:
   - rstudio
+  - jupyterlab
+  - notebook
 package_managers:
   - apt:
-  - conda3:
-      - r-essentials=3.4.3
-      - r-tidyverse=1.2.1
 icon: |
    data:image/svg+xml;utf8,
    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid" width="50" height="50" viewBox="0 0 724 561">
