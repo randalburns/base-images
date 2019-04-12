@@ -11,15 +11,9 @@ RUN apt-get update \
     && apt-get install -yq --no-install-recommends \
         # nginx is actually a requirement for our approach to proxying
         nginx \
-        # RStudio requirements - keeping separate with thoughts of a refactor
+        # RStudio requirements for notebooks
         r-cran-catools \
         r-cran-bitops \
-        sudo \
-        psmisc \
-        libapparmor1 \
-        libedit2 \
-        lsb-release \
-        libssl1.0.0 \
     && apt-get clean
 
 # downloading the GPG key for RStudio is problematic, so we use the md5 hash
@@ -30,9 +24,10 @@ RUN apt-get update \
 ENV RSTUDIO_MD5=4e9ee8bad6b8a88ea57caa80106cd388 \
     RSTUDIO_VER=1.2.1335
 
-RUN wget https://download2.rstudio.org/rstudio-server-${RSTUDIO_VER}-amd64.deb \
+RUN wget https://download2.rstudio.org/server/trusty/amd64/rstudio-server-${RSTUDIO_VER}-amd64.deb \
     && echo $RSTUDIO_MD5 rstudio-server-${RSTUDIO_VER}-amd64.deb | md5sum -c \
-    && dpkg -i rstudio-server-*-amd64.deb \
+    && apt-get install -yq --no-install-recommends ./rstudio-server-*-amd64.deb \
+    && apt-get clean \
     && rm rstudio-server-*-amd64.deb
 
 # Expose port for RStudio
