@@ -9,8 +9,6 @@ LABEL maintainer="Gigantum <support@gigantum.com>"
 # Install system level dependencies
 RUN apt-get update \
     && apt-get install -yq --no-install-recommends \
-        # nginx is actually a requirement for our approach to proxying
-        nginx \
         # RStudio requirements for notebooks
         r-cran-catools \
         r-cran-bitops \
