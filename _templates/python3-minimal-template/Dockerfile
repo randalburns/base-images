@@ -87,4 +87,4 @@ EXPOSE 8888
 WORKDIR $GIGANTUM_WORKDIR
 
 # CMD may be updated during final image assembly, but this keeps a container alive.
-CMD ["tail -f /dev/null"]
+CMD ["tail", "-f", "/dev/null"]
