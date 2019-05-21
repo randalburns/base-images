@@ -3,7 +3,7 @@
 # which are Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 
-FROM gigantum/python3-minimal:17b8e50607-2019-02-08
+FROM gigantum/python3-minimal:ec9098c3ad-2019-05-21
 LABEL maintainer="Gigantum <support@gigantum.com>"
 
 
@@ -16,34 +16,46 @@ RUN apt-get update \
     && apt-get clean
 
 # Install Python packages
-# Remove pyqt and qt pulled in for matplotlib since we're only ever going to
-# use notebook-friendly backends in these images
+
 # nodejs is for jupyter lab extensions below
-RUN conda install --quiet --yes nodejs && \
+# It's pinned to match python3-minimal, to avoid the need to rebuild extensions
+RUN conda install --quiet --yes nodejs=10.15.3 && \
     conda install --quiet --yes \
         'blas=*=openblas' \
         'bokeh=1.0' \
-        'cloudpickle=0.6' \
+        'cloudpickle=1.0' \
         'cython=0.29' \
+        # This is a dependency of other packages - may as well list explicitly
+        # Some not currently explicit, but maybe "data science" are fastcache and pyparsing
+        'dask-core=1.2' \
         'dill=0.2' \
-        'h5py=2.7' \
+        'h5py=2.9' \
         'hdf5=1.10' \
         'ipywidgets=7.4' \
-        'matplotlib=2.2' \
-        'numba=0.41' \
+        'matplotlib=3.1' \
+        # Another dependency made explicit
+        'networkx=2.3' \
+        'numba=0.43' \
         'numexpr=2.6' \
-        'pandas=0.23' \
+        'numpy=1.16' \
+        'pandas=0.24' \
         'patsy=0.5' \
-        'plotly=3.4' \
-        'scikit-image=0.14' \
-        'scikit-learn=0.20' \
-        'scipy=1.1' \
+        'plotly=3.9' \
+        # Another dependency made explicit
+        'pywavelets=1.0.3' \
+        # Another dependency made explicit
+        'pyyaml=5.1' \
+        'scikit-image=0.15' \
+        'scikit-learn=0.21' \
+        'scipy=1.3' \
         'seaborn=0.9' \
-        'sqlalchemy=1.2' \
+        'sqlalchemy=1.3' \
         'statsmodels=0.9' \
-        'sympy=1.3' \
-        'xarray=0.11' \
-        'xlrd=1.1'  \
+        'sympy=1.4' \
+        'xarray=0.12' \
+        'xlrd=1.2'  \
+    # Remove pyqt and qt pulled in for matplotlib since we're only ever going to
+    # use notebook-friendly backends in these images
     && conda remove --quiet --yes --force qt pyqt && \
     conda clean --all
 
