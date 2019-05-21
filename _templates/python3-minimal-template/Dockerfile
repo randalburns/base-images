@@ -36,8 +36,8 @@ ENV CONDA_DIR=/opt/conda \
     GIGANTUM_SHARE=/mnt/share \
     GIGANTUM_WORKDIR=/mnt/labbook \
     SHELL=/bin/bash \
-    MINICONDA_VERSION=4.5.12 \
-    MINICONDA_MD5=866ae9dff53ad0874e1d1a60b1ad1ef8 \
+    MINICONDA_VERSION=4.6.14 \
+    MINICONDA_MD5=718259965f234088d785cad1fbd7de03 \
     LC_ALL=en_US.UTF-8 \
     LANG=en_US.UTF-8
 ENV PATH=$CONDA_DIR/bin:$PATH \
@@ -50,17 +50,24 @@ RUN cd /tmp && \
     /bin/bash Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh -f -b -p $CONDA_DIR && \
     rm Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh && \
     conda config --system --prepend channels conda-forge && \
+    # We don't want the `r` channel
+    conda config --system --remove channels defaults && \
+    conda config --system --append channels anaconda && \
     conda config --system --set auto_update_conda false && \
     conda config --system --set show_channel_urls true && \
     # We update conda explicitly to get any gains in performance, etc.
     conda update --quiet --yes conda && \
     conda update --all --quiet --yes && \
     # notebook 5.3 through 5.7.1 have security holes
-    conda install --quiet --yes -c conda-forge 'jupyterlab=0.35' 'notebook>=5.7.2,<5.8' && \
+    # Pillow 6.0 breaks things like pytorch, so we install it pre-emptively
+    conda install --quiet --yes -c conda-forge jupyterlab=0.35 'notebook>=5.7.2,<5.8' pillow=5.4 && \
     # This is currently installed by default by conda, but it's mission
     # critical so we make it explicit
     conda install pip && \
-    conda install --quiet --yes nodejs && \
+    # We pin the version of nodejs so we can be sure to re-install the same
+    # version later - avoiding jupyterlab extension rebuilds and generally
+    # improving compatability
+    conda install --quiet --yes nodejs==10.15.3 && \
     pip install nbresuse && \
     # unlcear from statusbar docs if this is necessary for jupyterlab, but doesn't hurt
     jupyter serverextension enable --py nbresuse && \
