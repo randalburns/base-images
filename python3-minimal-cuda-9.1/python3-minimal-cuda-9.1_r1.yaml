@@ -13,7 +13,7 @@ readme: |
 
     - @jupyterlab/toc
     - @jupyterlab/statusbar
-revision: 0
+revision: 1
 schema: 1
 tags: ['ubuntu', 'python3', 'jupyterlab', 'cuda', 'gpu', 'machine-learning']
 os_class: ubuntu
