@@ -32,6 +32,7 @@ package_managers:
   - numpy=1.16*
   - pandas=0.24*
   - patsy=0.5*
+  - pillow=5.4*
   - plotly=3.9*
   - pywavelets=1.0*
   - scikit-image=0.15*
