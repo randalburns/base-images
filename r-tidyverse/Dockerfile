@@ -3,7 +3,7 @@
 # The below is a relatively straightforward adaptation of directions at
 # https://cran.r-project.org/bin/linux/ubuntu/README.html
 
-FROM gigantum/python3-minimal:17b8e50607-2019-02-08
+FROM gigantum/python3-minimal:ec9098c3ad-2019-05-21
 LABEL maintainer="Gigantum <support@gigantum.com>"
 
 # I downloaded this key using
@@ -49,7 +49,7 @@ RUN apt-get update \
 RUN echo 'options(repos = c(CRAN = "https://cloud.r-project.org/"))\n' >> /etc/R/Rprofile.site \
     # Also Install IRkernal and set up the installed R interpreter in Jupyter
     # Note that even with upgrade_dependencies=FALSE, we upgrade pbdZMQ
-    && R -e "devtools::install_github('IRkernel/IRkernel', ref='0.8.14', upgrade_dependencies=FALSE); IRkernel::installspec(user=FALSE)" \
+    # && R -e "devtools::install_github('IRkernel/IRkernel', ref='0.8.14', upgrade_dependencies=FALSE); IRkernel::installspec(user=FALSE)" \
     # The above will error out by attempting to use the IRkernel package.
     # An alternative is to ensure packages are installed as follows:
     # The below did not succeed even when biocLite() was run above
