@@ -13,8 +13,6 @@ readme: |
 
     - @jupyterlab/toc
     - @jupyterlab/statusbar
-    - @jupyter-widgets/jupyterlab-manager
-
 revision: 0
 schema: 1
 tags: ['ubuntu', 'python3', 'jupyterlab', 'cuda', 'gpu', 'machine-learning']
