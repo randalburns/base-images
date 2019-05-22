@@ -10,6 +10,8 @@ LABEL maintainer="Gigantum <support@gigantum.com>"
 RUN apt-get update \
     && apt-get install -yq --no-install-recommends \
         # These are needed by some conda-installed packages, such as opencv
+        # Note that since our R bases use apt, this gets taken care of
+        # automatically there
         libxrender1 \
         libxext6 \
         libgl1-mesa-glx \

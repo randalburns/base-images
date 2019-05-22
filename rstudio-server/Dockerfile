@@ -3,7 +3,7 @@
 # The below is a relatively straightforward adaptation of directions at
 # https://cran.r-project.org/bin/linux/ubuntu/README.html
 
-FROM gigantum/r-tidyverse:17b8e50607-2019-02-08
+FROM gigantum/r-tidyverse:4a4f67f455-2019-05-22
 LABEL maintainer="Gigantum <support@gigantum.com>"
 
 # Install system level dependencies
