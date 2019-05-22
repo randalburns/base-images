@@ -9,8 +9,8 @@ image:
   server: hub.docker.com
   tag: 4a4f67f455-2019-05-22
 languages:
-  - python3
   - R
+  - python3
 license: MIT
 name: R 3.6 with Tidyverse (+ Python3) in Jupyter
 os_class: ubuntu
@@ -21,10 +21,11 @@ package_managers:
     - r-cran-tidyverse=1.2.1-3cran1ppa0bionic0
     - r-cran-data.table=1.12.2-1cran1ppabionic0
   - pip: null
-  - conda3: null
+  - conda3:
+    - pillow=5.4*
 readme: |
-  A Base containing a conda-managed JupyterLab install for R with tidyverse
-  packages pre-installed. OpenBLAS is enabled on top of the official CRAN PPA.
+  A Base containing a conda-managed JupyterLab install with R 3.6 and tidyverse
+  packages from the official CRAN PPA. OpenBLAS is configured.
 
   You should generally use Apt with `r-cran-<package name>` to quickly install
   "package name" from CRAN. You can also use Docker snippets for approaches
