@@ -48,13 +48,11 @@ RUN apt-get update \
 # options(repos=c(CRAN="https://cran.microsoft.com/snapshot/2018-07-23/"))
 RUN echo 'options(repos = c(CRAN = "https://cloud.r-project.org/"))\n' >> /etc/R/Rprofile.site \
     # Also Install IRkernal and set up the installed R interpreter in Jupyter
-    # Note that even with upgrade_dependencies=FALSE, we upgrade pbdZMQ
-    # && R -e "devtools::install_github('IRkernel/IRkernel', ref='0.8.14', upgrade_dependencies=FALSE); IRkernel::installspec(user=FALSE)" \
+    && R -e "install.packages('IRkernel', upgrade_dependencies=FALSE); IRkernel::installspec(user=FALSE)"
     # The above will error out by attempting to use the IRkernel package.
     # An alternative is to ensure packages are installed as follows:
     # The below did not succeed even when biocLite() was run above
     # && R -e "stopifnot(all(c('IRkernel', 'BiocManager') %in% installed.packages()[, 'Package']))" \
-    && rm -rf /tmp/*/downloaded_packages
     # The core of bioconductor is automatically installed by things like
     # neuroconductor. This will speed up one-off package installation for repos
     # that assume this as a pre-req:
