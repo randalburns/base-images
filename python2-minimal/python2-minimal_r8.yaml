@@ -17,8 +17,7 @@ os_class: ubuntu
 os_release: '18.04'
 package_managers:
   - pip: null
-  - conda2:
-    - pillow=5.4*
+  - conda2: null
   - apt: null
 readme: A Base containing Python 2.7 and JupyterLab with minimal additional packages (Pillow)
 revision: 8
