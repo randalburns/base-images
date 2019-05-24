@@ -1,6 +1,6 @@
 id: "rstudio-server"
-name: "R Tidyverse in RStudio Server"
-description: "R + tidyverse packages in RStudio Server"
+name: "R Tidyverse in RStudio® Server"
+description: "R + tidyverse packages in RStudio® Server"
 readme: |
   A Base containing R 3.6 and Tidyverse from the official CRAN PPA configured
   for use in RStudio® Server.  A conda-managed JupyterLab is also installed, and
