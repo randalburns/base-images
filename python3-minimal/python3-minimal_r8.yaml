@@ -1,4 +1,4 @@
-description: A minimal Base with Python 3.7, JupyterLab, and one additional package
+description: A minimal Base with Python 3.7 and JupyterLab
 development_tools:
   - jupyterlab
   - notebook
@@ -19,7 +19,7 @@ package_managers:
   - conda3: null
   - apt: null
 readme: |
-  A minimal Base with Python 3.7 and JupyterLab
+  A minimal Base with Python 3.7 and a recent version of JupyterLab
 
   The following JupyterLab widgets are configured:
     - @jupyterlab/toc

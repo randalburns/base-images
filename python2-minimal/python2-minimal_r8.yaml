@@ -1,5 +1,4 @@
-description: A minimal Base containing Python 2.7 and JupyterLab with no additional
-  packages
+description: A minimal Base containing Python 2.7 and JupyterLab
 development_tools:
   - jupyterlab
   - notebook
@@ -19,7 +18,8 @@ package_managers:
   - pip: null
   - conda2: null
   - apt: null
-readme: A Base containing Python 2.7 and JupyterLab with minimal additional packages (Pillow)
+readme: |
+  A minimal Base containing Python 2.7 and the latest supported JupyterLab (0.33). Python3 is recommended if possible!
 revision: 8
 schema: 1
 tags:
