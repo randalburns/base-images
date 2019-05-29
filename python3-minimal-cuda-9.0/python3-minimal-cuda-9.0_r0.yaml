@@ -10,10 +10,8 @@ readme: |
   be available in your Project.
 
   The following JupyterLab widgets are configured:
-
     - @jupyterlab/toc
     - @jupyterlab/statusbar
-    - @jupyter-widgets/jupyterlab-manager
 
 revision: 0
 schema: 1

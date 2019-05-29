@@ -32,8 +32,8 @@ ENV CONDA_DIR=/opt/conda \
     GIGANTUM_SHARE=/mnt/share \
     GIGANTUM_WORKDIR=/mnt/labbook \
     SHELL=/bin/bash \
-    MINICONDA_VERSION=4.5.11 \
-    MINICONDA_MD5=458324438b7b0e5afcc272b63d44195d \
+    MINICONDA_VERSION=4.6.14 \
+    MINICONDA_MD5=faa7cb0b0c8986ac3cacdbbd00fe4168 \
     LC_ALL=en_US.UTF-8 \
     LANG=en_US.UTF-8
 ENV PATH=$CONDA_DIR/bin:$PATH \
@@ -45,12 +45,16 @@ RUN cd /tmp && wget --quiet https://repo.continuum.io/miniconda/Miniconda2-${MIN
     /bin/bash Miniconda2-${MINICONDA_VERSION}-Linux-x86_64.sh -f -b -p $CONDA_DIR && \
     rm Miniconda2-${MINICONDA_VERSION}-Linux-x86_64.sh && \
     conda config --system --prepend channels conda-forge && \
+    # We don't want the `r` channel
+    conda config --system --remove channels defaults && \
+    conda config --system --append channels anaconda && \
     conda config --system --set auto_update_conda false && \
     conda config --system --set show_channel_urls true && \
     conda update --quiet --yes conda && \
     conda update --all --quiet --yes && \
     # notebook 5.3 through 5.7.1 have security holes
-    conda install --quiet --yes -c conda-forge 'jupyterlab=0.33' 'notebook>=5.7.2,<5.8' && \
+    # jupyterlab 0.33 is the final version that supports python 2.7
+    conda install --quiet --yes -c conda-forge 'jupyterlab=0.33' 'notebook>=5.7.2,<5.8' pillow=5.4 && \
     conda install pip && \
     conda clean --all
 
