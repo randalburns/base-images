@@ -36,8 +36,8 @@ ENV CONDA_DIR=/opt/conda \
     GIGANTUM_SHARE=/mnt/share \
     GIGANTUM_WORKDIR=/mnt/labbook \
     SHELL=/bin/bash \
-    MINICONDA_VERSION=4.6.14 \
-    MINICONDA_MD5=718259965f234088d785cad1fbd7de03 \
+    MINICONDA_VERSION=4.7.12.1 \
+    MINICONDA_MD5=23bf3acd6aead6e91fb936fc185b033e \
     LC_ALL=en_US.UTF-8 \
     LANG=en_US.UTF-8
 ENV PATH=$CONDA_DIR/bin:$PATH \
@@ -53,20 +53,22 @@ RUN cd /tmp && \
     # We don't want the `r` channel
     conda config --system --remove channels defaults && \
     conda config --system --append channels anaconda && \
+    # Recommended by conda-forge
+    conda config --set channel_priority strict && \
     conda config --system --set auto_update_conda false && \
     conda config --system --set show_channel_urls true && \
     # We update conda explicitly to get any gains in performance, etc.
     conda update --quiet --yes conda && \
     conda update --all --quiet --yes && \
     # notebook 5.3 through 5.7.1 have security holes
-    conda install --quiet --yes -c conda-forge jupyterlab=1.0.2 'notebook>=6.0,<6.1' && \
+    conda install --quiet --yes -c conda-forge jupyterlab=1.2.4 'notebook>=6.0,<6.1' && \
     # This is currently installed by default by conda, but it's mission
     # critical so we make it explicit
     conda install pip && \
     # We pin the version of nodejs so we can be sure to re-install the same
     # version later - avoiding jupyterlab extension rebuilds and generally
     # improving compatability
-    conda install --quiet --yes nodejs==10.15.3 && \
+    conda install --quiet --yes nodejs==12.13.0 && \
     pip install nbresuse && \
     # enable memory usage reporting in the statusbar (now installed by default)
     jupyter serverextension enable --py nbresuse && \

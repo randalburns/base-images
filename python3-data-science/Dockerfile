@@ -21,7 +21,7 @@ RUN apt-get update \
 
 # nodejs is for jupyter lab extensions below
 # It's pinned to match python3-minimal, to avoid the need to rebuild extensions
-RUN conda install --quiet --yes nodejs=10.15.3 && \
+RUN conda install --quiet --yes nodejs=12.13.0 && \
     conda install --quiet --yes \
         'blas=*=openblas' \
         'bokeh=1.2' \
