@@ -12,8 +12,6 @@ RUN apt-get update \
         # RStudio requirements for notebooks
         r-cran-catools \
         r-cran-bitops \
-        # For some reason not in the dependencies for RStudio, but it is required
-        # libssl1.0.0 \
     && apt-get clean
 
 # downloading the GPG key for RStudio is problematic, so we use the md5 hash
