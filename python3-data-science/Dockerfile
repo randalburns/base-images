@@ -43,7 +43,7 @@ RUN conda install --quiet --yes nodejs=12.13.0 && \
         'pandas=0.25' \
         'patsy=0.5' \
         'pillow=6.2' \
-        'plotly=4.4' \
+        'psutil=5.6' \
         # Another dependency made explicit
         'pywavelets=1.1' \
         # Another dependency made explicit
@@ -57,19 +57,25 @@ RUN conda install --quiet --yes nodejs=12.13.0 && \
         'sympy=1.5' \
         'xarray=0.14' \
         'xlrd=1.2'  \
-    # Remove pyqt and qt pulled in for matplotlib since we're mostly going to
-    # use notebook-friendly backends in these images
-    && conda remove --quiet --yes --force qt pyqt && \
-    conda clean --all
+    && conda install --quiet --yes -c plotly 'plotly=4.4' 'plotly-orca=1.2' \
+    # Note - we used to remove pyqt and qt since we are mostly browser-based, but the conda solver pulls it in as part
+    # of any subsequent installation, so it's better to just leave it installed to save space and time
+    && conda clean --all
 
 # Set up additional widgets
-RUN jupyter labextension install jupyterlab_bokeh && \
-    jupyter labextension install @jupyterlab/geojson-extension && \
-    jupyter labextension install @jupyterlab/plotly-extension && \
+RUN export NODE_OPTIONS=--max-old-space-size=4096 && \
+    jupyter labextension install jupyterlab_bokeh --no-build && \
+    jupyter labextension install @jupyterlab/geojson-extension --no-build && \
+    # Activate ipywidgets extensions for JupyterLab
+    jupyter labextension install @jupyter-widgets/jupyterlab-manager@1.1 --no-build && \
+    jupyter labextension install plotlywidget@1.4.0 --no-build && \
+    jupyter labextension install jupyterlab-plotly@1.4.0 --no-build && \
+    # Build all of the above
+    jupyter lab build && \
+    # unset just in case
+    unset NODE_OPTIONS && \
     # Activate ipywidgets for notebook server just in case
     jupyter nbextension enable --py widgetsnbextension --sys-prefix && \
-    # Activate ipywidgets extensions for JupyterLab
-    jupyter labextension install @jupyter-widgets/jupyterlab-manager && \
     npm cache clean --force && \
     rm -rf $CONDA_DIR/share/jupyter/lab/staging && \
     rm -rf /root/.cache/yarn && \
