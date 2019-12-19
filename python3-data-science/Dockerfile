@@ -24,39 +24,40 @@ RUN apt-get update \
 RUN conda install --quiet --yes nodejs=12.13.0 && \
     conda install --quiet --yes \
         'blas=*=openblas' \
-        'bokeh=1.2' \
+        'bokeh=1.4' \
         'cloudpickle=1.2' \
         'cython=0.29' \
         # This is a dependency of other packages - may as well list explicitly
         # Some not currently explicit, but maybe "data science" are fastcache and pyparsing
-        'dask-core=2.1' \
+        'dask-core=2.9' \
         'dill=0.3' \
-        'h5py=2.9' \
+        'h5py=2.10' \
         'hdf5=1.10' \
         'ipywidgets=7.5' \
         'matplotlib=3.1' \
         # Another dependency made explicit
-        'networkx=2.3' \
-        'numba=0.44' \
-        'numexpr=2.6' \
-        'numpy=1.16' \
+        'networkx=2.4' \
+        'numba=0.46' \
+        'numexpr=2.7' \
+        'numpy=1.17' \
         'pandas=0.25' \
         'patsy=0.5' \
-        'plotly=4.0' \
+        'pillow=6.2' \
+        'plotly=4.4' \
         # Another dependency made explicit
-        'pywavelets=1.0' \
+        'pywavelets=1.1' \
         # Another dependency made explicit
-        'pyyaml=5.1' \
-        'scikit-image=0.15' \
-        'scikit-learn=0.21' \
+        'pyyaml=5.2' \
+        'scikit-image=0.16' \
+        'scikit-learn=0.22' \
         'scipy=1.3' \
         'seaborn=0.9' \
         'sqlalchemy=1.3' \
         'statsmodels=0.10' \
-        'sympy=1.4' \
-        'xarray=0.12' \
+        'sympy=1.5' \
+        'xarray=0.14' \
         'xlrd=1.2'  \
-    # Remove pyqt and qt pulled in for matplotlib since we're only ever going to
+    # Remove pyqt and qt pulled in for matplotlib since we're mostly going to
     # use notebook-friendly backends in these images
     && conda remove --quiet --yes --force qt pyqt && \
     conda clean --all
