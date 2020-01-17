@@ -21,54 +21,61 @@ RUN apt-get update \
 
 # nodejs is for jupyter lab extensions below
 # It's pinned to match python3-minimal, to avoid the need to rebuild extensions
-RUN conda install --quiet --yes nodejs=10.15.3 && \
+RUN conda install --quiet --yes nodejs=12.13.0 && \
     conda install --quiet --yes \
         'blas=*=openblas' \
-        'bokeh=1.2' \
+        'bokeh=1.4' \
         'cloudpickle=1.2' \
         'cython=0.29' \
         # This is a dependency of other packages - may as well list explicitly
         # Some not currently explicit, but maybe "data science" are fastcache and pyparsing
-        'dask-core=2.1' \
+        'dask-core=2.9' \
         'dill=0.3' \
-        'h5py=2.9' \
+        'h5py=2.10' \
         'hdf5=1.10' \
         'ipywidgets=7.5' \
         'matplotlib=3.1' \
         # Another dependency made explicit
-        'networkx=2.3' \
-        'numba=0.44' \
-        'numexpr=2.6' \
-        'numpy=1.16' \
+        'networkx=2.4' \
+        'numba=0.46' \
+        'numexpr=2.7' \
+        'numpy=1.17' \
         'pandas=0.25' \
         'patsy=0.5' \
-        'plotly=4.0' \
+        'pillow=6.2' \
+        'psutil=5.6' \
         # Another dependency made explicit
-        'pywavelets=1.0' \
+        'pywavelets=1.1' \
         # Another dependency made explicit
-        'pyyaml=5.1' \
-        'scikit-image=0.15' \
-        'scikit-learn=0.21' \
+        'pyyaml=5.2' \
+        'scikit-image=0.16' \
+        'scikit-learn=0.22' \
         'scipy=1.3' \
         'seaborn=0.9' \
         'sqlalchemy=1.3' \
         'statsmodels=0.10' \
-        'sympy=1.4' \
-        'xarray=0.12' \
+        'sympy=1.5' \
+        'xarray=0.14' \
         'xlrd=1.2'  \
-    # Remove pyqt and qt pulled in for matplotlib since we're only ever going to
-    # use notebook-friendly backends in these images
-    && conda remove --quiet --yes --force qt pyqt && \
-    conda clean --all
+    && conda install --quiet --yes -c plotly 'plotly=4.4' 'plotly-orca=1.2' \
+    # Note - we used to remove pyqt and qt since we are mostly browser-based, but the conda solver pulls it in as part
+    # of any subsequent installation, so it's better to just leave it installed to save space and time
+    && conda clean --all
 
 # Set up additional widgets
-RUN jupyter labextension install jupyterlab_bokeh && \
-    jupyter labextension install @jupyterlab/geojson-extension && \
-    jupyter labextension install @jupyterlab/plotly-extension && \
+RUN export NODE_OPTIONS=--max-old-space-size=4096 && \
+    jupyter labextension install jupyterlab_bokeh --no-build && \
+    jupyter labextension install @jupyterlab/geojson-extension --no-build && \
+    # Activate ipywidgets extensions for JupyterLab
+    jupyter labextension install @jupyter-widgets/jupyterlab-manager@1.1 --no-build && \
+    jupyter labextension install plotlywidget@1.4.0 --no-build && \
+    jupyter labextension install jupyterlab-plotly@1.4.0 --no-build && \
+    # Build all of the above
+    jupyter lab build && \
+    # unset just in case
+    unset NODE_OPTIONS && \
     # Activate ipywidgets for notebook server just in case
     jupyter nbextension enable --py widgetsnbextension --sys-prefix && \
-    # Activate ipywidgets extensions for JupyterLab
-    jupyter labextension install @jupyter-widgets/jupyterlab-manager && \
     npm cache clean --force && \
     rm -rf $CONDA_DIR/share/jupyter/lab/staging && \
     rm -rf /root/.cache/yarn && \
