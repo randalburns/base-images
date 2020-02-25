@@ -31,7 +31,7 @@ readme: |
   like `install.packages` or `devtools::install_github`. Don't hesitate to use
   the "discuss" link (in the lower-right "?" bubble in the app) if you'd like
   some guidance!
-revision: 8
+revision: 0
 schema: 1
 tags:
 - ubuntu
