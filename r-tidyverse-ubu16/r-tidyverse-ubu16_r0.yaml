@@ -2,12 +2,12 @@ description: A JupyterLab install for CRAN PPA R 3.6 + tidyverse packages, etc.
 development_tools:
 - jupyterlab
 - notebook
-id: r-tidyverse
+id: r-tidyverse-ubu16
 image:
   namespace: gigantum
-  repository: r-tidyverse
+  repository: r-tidyverse-ubu16
   server: hub.docker.com
-  tag: f086714bd9-2019-12-18
+  tag: 7277babccf-2020-02-25
 languages:
 - R
 - python3
