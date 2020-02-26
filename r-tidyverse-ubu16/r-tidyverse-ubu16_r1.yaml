@@ -25,7 +25,7 @@ package_managers:
 - conda3: null
 readme: 'A Base containing a conda-managed JupyterLab install with R 3.6 and tidyverse
 
-  packages from the official CRAN PPA. OpenBLAS is configured.
+  packages from the official CRAN PPA. OpenBLAS is configured. Ubutnu 16.04.
 
 
   You should generally use Apt with `r-cran-<package name>` to quickly install
